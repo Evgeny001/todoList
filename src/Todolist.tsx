@@ -1,11 +1,13 @@
-import { Task } from '@/App'
+import { FilterValues, Task } from '@/App'
 import { Button } from '@/Button'
 
 interface TodolistProps {
+  changeFilter: (filter: FilterValues) => void
+  removeTask: (taskId: number) => void
   tasks: Array<Task>
   title: string
 }
-export const Todolist = ({ tasks, title }: TodolistProps) => {
+export const Todolist = ({ changeFilter, removeTask, tasks, title }: TodolistProps) => {
   return (
     <div>
       <h3>{title}</h3>
@@ -19,15 +21,16 @@ export const Todolist = ({ tasks, title }: TodolistProps) => {
         <ul>
           {tasks.map(el => (
             <li key={el.id}>
+              <Button onClick={() => removeTask(el.id)} title={'X'} />
               <input checked={el.isDone} type={'checkbox'} /> <span>{el.title}</span>
             </li>
           ))}
         </ul>
       )}
       <div>
-        <Button title={'All'} />
-        <Button title={'Active'} />
-        <Button title={'Completed'} />
+        <Button onClick={() => changeFilter('all')} title={'All'} />
+        <Button onClick={() => changeFilter('active')} title={'Active'} />
+        <Button onClick={() => changeFilter('completed')} title={'Completed'} />
       </div>
     </div>
   )
