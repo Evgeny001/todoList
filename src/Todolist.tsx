@@ -1,19 +1,32 @@
+import { useRef } from 'react'
+
 import { FilterValues, Task } from '@/App'
 import { Button } from '@/Button'
 
 interface TodolistProps {
+  addTask: (title: string) => void
   changeFilter: (filter: FilterValues) => void
-  removeTask: (taskId: number) => void
+  removeTask: (taskId: string) => void
   tasks: Array<Task>
   title: string
 }
-export const Todolist = ({ changeFilter, removeTask, tasks, title }: TodolistProps) => {
+export const Todolist = ({ addTask, changeFilter, removeTask, tasks, title }: TodolistProps) => {
+  const inputRef = useRef<HTMLInputElement>(null)
+
   return (
     <div>
       <h3>{title}</h3>
       <div>
-        <input />
-        <button type={'button'}>+</button>
+        <input ref={inputRef} />
+        <Button
+          onClick={() => {
+            if (inputRef.current) {
+              addTask(inputRef.current.value)
+              inputRef.current.value = ''
+            }
+          }}
+          title={'+'}
+        />
       </div>
       {tasks.length === 0 ? (
         <p>Тасок нет</p>
