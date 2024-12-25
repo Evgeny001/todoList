@@ -7,6 +7,7 @@ interface TodolistProps {
   addTask: (title: string) => void
   changeFilter: (filter: FilterValues) => void
   changeTaskStatus: (taskId: string, taskStatus: boolean) => void
+  filter: FilterValues
   removeTask: (taskId: string) => void
   tasks: Array<Task>
   title: string
@@ -15,6 +16,7 @@ export const Todolist = ({
   addTask,
   changeFilter,
   changeTaskStatus,
+  filter,
   removeTask,
   tasks,
   title,
@@ -72,7 +74,7 @@ export const Todolist = ({
             }
 
             return (
-              <li key={task.id}>
+              <li className={task.isDone ? 'is-done' : ''} key={task.id}>
                 <input checked={task.isDone} onChange={changeTaskStatusHandler} type={'checkbox'} />
                 <span>{task.title}</span>
                 <Button onClick={removeTaskHandler} title={'x'} />
@@ -82,9 +84,21 @@ export const Todolist = ({
         </ul>
       )}
       <div>
-        <Button onClick={() => changeFilterTasksHandler('all')} title={'All'} />
-        <Button onClick={() => changeFilterTasksHandler('active')} title={'Active'} />
-        <Button onClick={() => changeFilterTasksHandler('completed')} title={'Completed'} />
+        <Button
+          className={filter === 'all' ? 'active-filter' : ''}
+          onClick={() => changeFilterTasksHandler('all')}
+          title={'All'}
+        />
+        <Button
+          className={filter === 'active' ? 'active-filter' : ''}
+          onClick={() => changeFilterTasksHandler('active')}
+          title={'Active'}
+        />
+        <Button
+          className={filter === 'completed' ? 'active-filter' : ''}
+          onClick={() => changeFilterTasksHandler('completed')}
+          title={'Completed'}
+        />
       </div>
     </div>
   )

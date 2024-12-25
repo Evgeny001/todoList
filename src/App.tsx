@@ -58,6 +58,7 @@ export function App() {
         addTask={addTask}
         changeFilter={changeFilter}
         changeTaskStatus={changeTaskStatus}
+        filter={filter}
         removeTask={removeTask}
         tasks={tasksForTodolist}
         title={'What to learn'}
