@@ -48,11 +48,16 @@ export function App() {
     setTasks([...tasks, newTask])
   }
 
+  const changeTaskStatus = (taskId: string, taskStatus: boolean) => {
+    setTasks(tasks.map(task => (task.id === taskId ? { ...task, isDone: taskStatus } : task)))
+  }
+
   return (
     <div className={'App'}>
       <Todolist
         addTask={addTask}
         changeFilter={changeFilter}
+        changeTaskStatus={changeTaskStatus}
         removeTask={removeTask}
         tasks={tasksForTodolist}
         title={'What to learn'}
